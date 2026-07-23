@@ -1,4 +1,4 @@
-
+from .commands import Command
 
 class Engine:
     def __init__(self, simulation, gui):
@@ -11,10 +11,9 @@ class Engine:
             # user input
             commands = self.gui.get_commands()
 
-            # simulation
-            if commands:
-                for command in commands:
-                    self.simulation.execute(command)
+            # commands processing
+            for command in commands:
+                self.execute(command)
 
             render_data = self.simulation.get_render_data()
 
@@ -31,3 +30,8 @@ class Engine:
 
     def stop(self):
         self.running = False
+
+    def execute(self, command:Command):
+        match command:
+            case Command.EXIT:
+                self.stop()

@@ -1,4 +1,4 @@
-from commands import Command
+from engine import Command
 
 class InputMapper:
     def __init__(self, stdscr):
