@@ -11,15 +11,17 @@ class ConsoleUI:
 
     def start(self):
         self.stdscr = curses.initscr()
-        self.renderer = Renderer(self.stdscr)
         self.input_mapper = InputMapper(self.stdscr)
+        commands_info = self.input_mapper.get_commands_info()
+        self.renderer = Renderer(self.stdscr, commands_info=commands_info)
+
         curses.noecho()  # не отображать вводимые символы
         curses.cbreak()  # сразу получать нажатия
         self.stdscr.keypad(True)  # специальные клавиши
         # не блокировать getch()
         self.stdscr.nodelay(True)
-        self.stdscr.addstr('Игра Дж. Конвея "Жизнь"')
-        self.stdscr.refresh()
+
+        self.renderer.initialize()
 
     def stop(self):
         if self.stdscr is None:
