@@ -1,11 +1,13 @@
 from ui import ConsoleUI
+from ecs import Ecs
 from simulation import Simulation
 from engine import Engine
 
 
 def main():
     gui = ConsoleUI()
-    simulation = Simulation()
+    ecs = Ecs()
+    simulation = Simulation(ecs)
     engine = Engine(simulation, gui)
     engine.run()
 
