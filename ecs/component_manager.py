@@ -56,6 +56,12 @@ class ComponentManager:
                 query.append(self.component_entities[components_types[0]][key])
         return query
 
+    def get_entity_component(self, entity_id) -> set:
+        return self.entity_components.get(entity_id)
+
+    def get_position_index(self, index:tuple[int, int]) -> dict | None:
+        return self.index_position_components.get(index)
+
     def delete_entity(self, item):
         entity_id = None
         if type(item) in self.component_entities:
