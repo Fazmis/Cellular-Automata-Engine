@@ -5,4 +5,4 @@ class Simulation:
 
 
     def get_render_data(self):
-        self.ecs.get_render_data()
+        return self.ecs.get_render_data()
