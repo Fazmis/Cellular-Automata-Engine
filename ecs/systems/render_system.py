@@ -5,6 +5,11 @@ class RenderSystem:
         self.component_manager = component_manager
 
     def get_render_data(self):
-        render_data = self.component_manager.query(Position, IsAlive)
+        query = self.component_manager.query(Position, IsAlive)
+        render_data = []
+        for position, isalive in query:
+            render_data.append((
+                (position.x, position.y),
+                isalive.alive
+            ))
         return render_data
-
