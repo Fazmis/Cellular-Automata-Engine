@@ -1,5 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass(slots=True)
 class BaseComponent:
-    pass
+    entity_id: int | None = field(default=None, init=False, repr=False)
