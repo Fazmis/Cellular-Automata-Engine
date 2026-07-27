@@ -8,8 +8,7 @@ class SystemManager:
         self.render_system = RenderSystem(self.component_manager)
 
     def add_system(self, system):
-        activated_system = system(self.component_manager)
-        self.systems_to_update.append(activated_system)
+        self.systems_to_update.append(system)
 
     def update(self, dt):
         for system in self.systems_to_update:
