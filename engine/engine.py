@@ -1,3 +1,5 @@
+import time
+
 from .commands import Command
 
 class Engine:
@@ -19,14 +21,15 @@ class Engine:
 
             # render
             self.gui.render(render_data)
+            time.sleep(1)
 
     def run(self):
         self.running = True
-        self.gui.start()
+        self.gui.initialize()
         try:
             self._loop()
         finally:
-            self.gui.stop()
+            self.gui.shutdown()
 
     def stop(self):
         self.running = False
