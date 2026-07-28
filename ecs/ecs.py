@@ -9,8 +9,8 @@ class Ecs:
         self.component_manager = ComponentManager()
         self.system_manager = SystemManager(self)
 
-    def update(self, dt):
-        self.system_manager.update(dt)
+    def update(self):
+        self.system_manager.update()
 
     def add_entity(self, components: set|list):
         entity_id = self.entity_manager.create_entity()

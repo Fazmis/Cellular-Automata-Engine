@@ -10,9 +10,9 @@ class SystemManager:
     def add_system(self, system):
         self.systems_to_update.append(system)
 
-    def update(self, dt):
+    def update(self):
         for system in self.systems_to_update:
-            system.update(dt)
+            system.update()
 
     def get_render_data(self):
         return self.render_system.get_render_data()
