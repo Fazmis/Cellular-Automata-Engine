@@ -1,13 +1,16 @@
 import curses
-from .frames import MainMenuFrame, SimulationFrame
+
+from .cursor import Cursor
 from .input_mapper import InputMapper
+from .frames import MainMenuFrame, SimulationFrame
 
 
 class ConsoleUI:
     def __init__(self, size=(20, 20)):
-        self.stdscr = None
-        self.input_mapper = None
         self.size = size
+        self.stdscr = None
+        self.cursor = Cursor()
+        self.input_mapper = None
         self.main_menu_frame = MainMenuFrame
         self.simulation_frame = SimulationFrame
         self.current_frame = None
@@ -21,13 +24,14 @@ class ConsoleUI:
         # не блокировать getch()
         self.stdscr.nodelay(True)
 
-        self.input_mapper = InputMapper(self.stdscr)
+        self.input_mapper = InputMapper(self.stdscr, self.cursor)
         commands_info = self.input_mapper.get_commands_info()
         self.simulation_frame = self.simulation_frame(
             self.stdscr,
+            self.cursor,
             "Conway",
             (20, 20),
-            self.input_mapper.get_commands_info()
+            commands_info
         )
         self.current_frame = self.simulation_frame
 

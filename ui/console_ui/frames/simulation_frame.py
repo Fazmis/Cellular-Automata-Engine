@@ -3,8 +3,9 @@ from .windows import HeaderWindow, GameWindow, HelpWindow
 
 
 class SimulationFrame:
-    def __init__(self, stdscr: curses.window, simulation_name:str, grid_size:tuple[int, int], commands):
+    def __init__(self, stdscr: curses.window, cursor, simulation_name:str, grid_size:tuple[int, int], commands):
         self.stdscr = stdscr
+        self.cursor = cursor
         self.title = simulation_name
         self.grid_size = grid_size
         self.commands = commands
@@ -23,7 +24,8 @@ class SimulationFrame:
                 header_lines_count,
                 0,
             ),
-            grid_size
+            grid_size,
+            self.cursor
         )
         self.help_window = HelpWindow(
             curses.newwin(
