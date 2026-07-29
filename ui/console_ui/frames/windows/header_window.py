@@ -1,10 +1,10 @@
 import curses
 
 class HeaderWindow:
-    def __init__(self, window: curses.window, title:str):
+    def __init__(self, window: curses._CursesWindow, title:str):
         self.window = window
         self.title = title
-        self.window.addstr(title)
 
-    def render(self):
+    def render(self, title):
+        self.window.addstr(1, 0, title)
         self.window.noutrefresh()

@@ -25,13 +25,11 @@ class ConsoleUI:
         self.stdscr.nodelay(True)
 
         self.input_mapper = InputMapper(self.stdscr, self.cursor)
-        commands_info = self.input_mapper.get_commands_info()
         self.simulation_frame = self.simulation_frame(
             self.stdscr,
             self.cursor,
             "Conway",
             (20, 20),
-            commands_info
         )
         self.current_frame = self.simulation_frame
 
