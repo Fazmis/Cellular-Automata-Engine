@@ -18,6 +18,3 @@ class Ecs:
 
     def add_system(self, system):
         self.system_manager.add_system(system)
-
-    def get_render_data(self):
-        return self.system_manager.get_render_data()
