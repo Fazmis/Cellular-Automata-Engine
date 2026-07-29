@@ -44,3 +44,5 @@ class Engine:
                 self.simulation.change_cell(payload)
             case Command.NEXT_STEP:
                 self.simulation.next_step()
+            case Command.PREVIOUS_STEP:
+                self.simulation.previous_step()

@@ -10,6 +10,7 @@ class InputMapper:
             ord("q"): Command.EXIT,
             ord(" "): Command.EDIT_CELL,
             ord("\n"): Command.NEXT_STEP,
+            ord("\x08"): Command.PREVIOUS_STEP
         }
 
     def get_commands(self) -> list[dict[Command, list]]:
