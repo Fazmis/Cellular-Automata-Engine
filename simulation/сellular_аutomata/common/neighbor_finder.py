@@ -1,4 +1,4 @@
-from simulation.сellular_аutomata.common.base_components import Position, IsAlive
+from simulation.сellular_аutomata.common import Position, State
 
 
 class NeighborFinder:
@@ -29,8 +29,8 @@ class NeighborFinder:
                 components = self.component_manager.get_position_index(position_to_search)
                 if components is None:
                     continue
-                alive = components.get(IsAlive)
-                if alive and alive.alive:
-                    alive_list.append(alive.entity_id)
+                state = components.get(State)
+                if state and state.value > 0:
+                    alive_list.append(state.entity_id)
 
         return alive_list
