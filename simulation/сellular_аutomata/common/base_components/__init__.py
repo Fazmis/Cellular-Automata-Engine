@@ -1,10 +1,10 @@
 from .base_component import BaseComponent
 from .position import Position
-from .is_alive import IsAlive
+from .state import State
 
 
 __all__ = [
     "BaseComponent",
     "Position",
-    "IsAlive",
+    "State",
 ]

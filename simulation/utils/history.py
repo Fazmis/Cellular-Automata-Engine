@@ -8,6 +8,9 @@ class History:
         self.steps: dict[int, dict] = {}
         self.snapshot_components = snapshot_components
 
+    def get_current_step(self) -> int:
+        return self._current_step
+
     def save(self):
         snapshot = {}
         for component_type in self.snapshot_components:
@@ -34,3 +37,4 @@ class History:
                 component = self.component_manager.component_entities[component_type][save.entity_id]
                 for slot in save.__slots__:
                     setattr(component, slot, getattr(save, slot))
+
