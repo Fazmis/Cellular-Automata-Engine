@@ -1,6 +1,6 @@
-from .base_components import IsAlive
+from simulation.сellular_аutomata.common.base_components import IsAlive
 
-class CellChanger:
+class CellEditor:
     def __init__(self, component_manager):
         self.component_manager = component_manager
 

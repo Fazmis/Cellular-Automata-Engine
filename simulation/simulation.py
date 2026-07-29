@@ -1,4 +1,5 @@
-from .сellular_аutomata.common import CellChanger
+from .utils import CellEditor, History
+from .сellular_аutomata.common import IsAlive
 
 
 class Simulation:
@@ -6,7 +7,8 @@ class Simulation:
         self.ecs = ecs
         self.size = None
         self.factory = None
-        self.cell_changer = CellChanger(ecs.component_manager)
+        self.cell_editor = CellEditor(ecs.component_manager)
+        self.history = History(ecs.component_manager, [IsAlive])
 
 
     def initialize(self, factory, size=(20, 20), toroidal=True):
@@ -31,7 +33,11 @@ class Simulation:
             position[0] % self.size[0],
             position[1] % self.size[1],
                     )
-        self.cell_changer.change_cell_alive_from_position(position)
+        self.cell_editor.change_cell_alive_from_position(position)
 
     def next_step(self):
+        self.history.save()
         self.ecs.update()
+
+    def previous_step(self):
+        self.history.undo()
