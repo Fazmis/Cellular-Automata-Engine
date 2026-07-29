@@ -11,10 +11,16 @@ class HelpWindow:
             "backspace - previous step"
         ]
         for i, row in enumerate(self.help):
-            self.window.addstr(i + 1, 0, row)
+            self.window.addstr(i + 2, 0, row)
 
-    def render(self, generation):
+    def render(self, generation_step, state):
+        self.window.move(0, 0)
         self.window.clrtoeol()
-        generation_str = "Generation: " + str(generation)
+        self.window.move(1, 0)
+        self.window.clrtoeol()
+        generation_str = "Generation: " + str(generation_step)
+        state_str = "State: " + str(state)
         self.window.addstr(0, 0, generation_str)
+        self.window.addstr(1, 0, state_str)
         self.window.noutrefresh()
+

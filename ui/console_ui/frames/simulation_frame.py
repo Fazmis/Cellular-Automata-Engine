@@ -28,8 +28,8 @@ class SimulationFrame:
         )
         self.help_window = HelpWindow(
             curses.newwin(
-                6,
-                26,
+                7,
+                50,
                 header_lines_count + grid_size[1] + 1,
                 0
             ),
@@ -37,8 +37,11 @@ class SimulationFrame:
 
     def render(self, render_data:dict):
         self.header_window.render(render_data.get("title"))
+
         grid = render_data.get("grid")
         config = render_data.get("grid_config")
         self.game_window.render(grid, config)
-        generation = render_data.get("generation")
-        self.help_window.render(generation)
+
+        generation_step = render_data.get("generation_step")
+        state = render_data.get("state")
+        self.help_window.render(generation_step, state)

@@ -1,4 +1,4 @@
-from .utils import CellEditor, History
+from .utils import CellEditor, History, SimulationStates
 from .сellular_аutomata.common import Position, State
 
 
@@ -37,13 +37,25 @@ class Simulation:
     def get_render_data(self):
         render_data = {}
 
+        title = self.factory.title
+        generation_step = self.history.get_current_step()
         ecs_render_data = self._get_ecs_render_data()
         config = self.factory.get_config()
-
-        render_data["title"] = self.factory.title
-        render_data["generation"] = self.history.get_current_step()
+        state = self.history.get_state()
+        match state:
+            case SimulationStates.NORMAL:
+                state = "Running"
+            case SimulationStates.ALL_DIED:
+                state = "No living cells!"
+            case SimulationStates.STABLE:
+                state = "Stable configuration"
+            case SimulationStates.CYCLED:
+                state = "Loop detected"
+        render_data["title"] = title
+        render_data["generation_step"] = generation_step
         render_data["grid"] = ecs_render_data
         render_data["grid_config"] = config
+        render_data["state"] = state
         return render_data
 
 
