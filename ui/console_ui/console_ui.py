@@ -1,5 +1,5 @@
 import curses
-
+from .console_window import prepare_console
 from .cursor import Cursor
 from .input_mapper import InputMapper
 from .frames import MainMenuFrame, SimulationFrame
@@ -16,6 +16,7 @@ class ConsoleUI:
         self.current_frame = None
 
     def initialize(self) -> None:
+        prepare_console()
         self.stdscr = curses.initscr()
 
         curses.noecho()  # не отображать вводимые символы
