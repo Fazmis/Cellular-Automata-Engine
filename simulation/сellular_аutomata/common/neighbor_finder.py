@@ -8,7 +8,7 @@ class NeighborFinder:
         self.radius = radius
         self.toroidal = toroidal
 
-    def get_alive_neighbors(self, position: Position) -> list[int]:
+    def get_neighbor_states(self, position: Position) -> list[int]:
         x, y = position.x, position.y
         if self.toroidal:
             next_pos = lambda i, j: (
@@ -20,7 +20,7 @@ class NeighborFinder:
                 x + i,
                 y + j
             )
-        alive_list = []
+        neighbor_states = []
         for i in range(-self.radius, self.radius + 1):
             for j in range(-self.radius, self.radius + 1):
                 if i == j == 0:
@@ -30,7 +30,22 @@ class NeighborFinder:
                 if components is None:
                     continue
                 state = components.get(State)
-                if state and state.value > 0:
-                    alive_list.append(state.entity_id)
+                neighbor_states.append(state.value)
 
-        return alive_list
+        return neighbor_states
+
+    def count_neighbors(self, position, predicate):
+        states = self.get_neighbor_states(position)
+        return sum(predicate(state) for state in states)
+
+    def count_neighbors_equal(self, position, value):
+        predicate = lambda x: x == value
+        return self.count_neighbors(position, predicate)
+
+    def count_neighbors_greater(self, position, value):
+        predicate = lambda x: x > value
+        return self.count_neighbors(position, predicate)
+
+    def count_neighbors_less(self, position, value):
+        predicate = lambda x: x < value
+        return self.count_neighbors(position, predicate)

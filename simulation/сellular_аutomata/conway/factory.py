@@ -1,6 +1,4 @@
-from ..common import Position, State, NeighborFinder, AutomataConfig
-from .systems import LifeDeathSystem
-from ..common.base_components import BaseComponent
+from ..common import Position, State, BirthSurviveSystem, NeighborFinder, AutomataConfig
 
 
 class Factory:
@@ -9,8 +7,13 @@ class Factory:
         self.component_manager = component_manager
         self.size = size
         self.toroidal = toroidal
+
         self.neighbor_finder = NeighborFinder(self.component_manager, size, toroidal)
+
+        self.title = "Conway Game Of Life"
         self.cell_states_count = 2
+        self.birth = {3}
+        self.survive = {2, 3}
         self.config = AutomataConfig(
             states_count = self.cell_states_count,
             symbols = {
@@ -25,7 +28,12 @@ class Factory:
         ]
 
         self.systems = [
-            LifeDeathSystem(self.component_manager, self.neighbor_finder)
+            BirthSurviveSystem(
+                self.component_manager,
+                self.neighbor_finder,
+                self.birth,
+                self.survive,
+            )
         ]
 
     def get_config(self) -> AutomataConfig:
