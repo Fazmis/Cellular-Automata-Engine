@@ -1,6 +1,6 @@
 from ..base_components import Position, State
 from .base_system import BaseSystem
-from ..neighbor_finder import NeighborFinder
+from simulation.сellular_аutomata.common.utils.neighbor_finder import NeighborFinder
 
 
 class BirthSurviveSystem(BaseSystem):

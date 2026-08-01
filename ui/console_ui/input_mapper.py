@@ -1,9 +1,9 @@
 import curses
-
 from engine import Command
 
+
 class InputMapper:
-    def __init__(self, stdscr, cursor):
+    def __init__(self, stdscr, cursor) -> None:
         self.stdscr = stdscr
         self.cursor = cursor
         self.keymap = {

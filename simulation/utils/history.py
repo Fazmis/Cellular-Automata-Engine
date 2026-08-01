@@ -1,11 +1,11 @@
 from copy import deepcopy
 from .history_step import Step
 from .simulation_states import SimulationStates
-from ..сellular_аutomata.common import State
+from ..сellular_аutomata.common.base_components import State
 
 
 class History:
-    def __init__(self, component_manager, snapshot_components:list):
+    def __init__(self, component_manager, snapshot_components: list) -> None:
         self.component_manager = component_manager
         self.snapshot_components = snapshot_components
         self._current_step = 0
@@ -16,30 +16,30 @@ class History:
     def get_current_step(self) -> int:
         return self._current_step
 
-    def get_state(self):
+    def get_state(self) -> SimulationStates:
         return self.state
 
-    def save(self):
+    def save(self) -> None:
         # snapshot
         snapshot = self._create_snapshot()
         # hash
         snapshot_hash = self._hash(snapshot)
         # state
         self._state_update(snapshot_hash)
-        #save
+        # save
         step_id = self._current_step
         self._current_step += 1
         self.steps[step_id] = Step(snapshot, snapshot_hash)
         self.hashes.add(snapshot_hash)
 
-    def load(self, snapshot):
+    def load(self, snapshot) -> None:
         for component_type, saves in snapshot.items():
             for save in saves:
                 component = self.component_manager.component_entities[component_type][save.entity_id]
                 for slot in save.__slots__:
                     setattr(component, slot, getattr(save, slot))
 
-    def undo(self):
+    def undo(self) -> None:
         if self._current_step <= 0:
             return
         self._current_step -= 1
@@ -48,7 +48,7 @@ class History:
         self.hashes.discard(step.hash)
         self.load(step.snapshot)
 
-    def _create_snapshot(self):
+    def _create_snapshot(self) -> dict:
         snapshot = {}
         for component_type in self.snapshot_components:
             component_type_saves = []
@@ -58,16 +58,16 @@ class History:
             snapshot[component_type] = component_type_saves
         return snapshot
 
-    def _hash(self, snapshot):
+    @staticmethod
+    def _hash(snapshot) -> int:
         hash_step = []
         for key, values in snapshot.items():
             hash_values = tuple((v.entity_id, v.value) for v in sorted(values, key=lambda x: x.entity_id))
             hash_step.append(tuple((key, hash_values)))
         return hash(tuple(hash_step))
 
-    def _state_update(self, snapshot_hash):
-
-        def is_all_die():
+    def _state_update(self, snapshot_hash) -> None:
+        def is_all_die() -> bool:
             states = self.component_manager.query(State)
             return all(state.value <= 0 for state in states)
 

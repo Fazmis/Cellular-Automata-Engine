@@ -1,4 +1,5 @@
 import curses
+from engine import Command
 from .console_window import prepare_console
 from .cursor import Cursor
 from .input_mapper import InputMapper
@@ -6,7 +7,7 @@ from .frames import MainMenuFrame, SimulationFrame
 
 
 class ConsoleUI:
-    def __init__(self, size=(20, 20)):
+    def __init__(self, size=(20, 20)) -> None:
         self.size = size
         self.stdscr = None
         self.cursor = Cursor()
@@ -42,9 +43,9 @@ class ConsoleUI:
         curses.echo()
         curses.endwin()
 
-    def render(self, render_data):
+    def render(self, render_data) -> None:
         self.current_frame.render(render_data)
         curses.doupdate()
 
-    def get_commands(self):
+    def get_commands(self) -> list[dict[Command, list]]:
         return self.input_mapper.get_commands()

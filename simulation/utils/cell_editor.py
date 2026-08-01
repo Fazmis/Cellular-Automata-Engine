@@ -1,7 +1,8 @@
-from simulation.сellular_аutomata.common import State
+from simulation.сellular_аutomata.common.base_components import State
+
 
 class CellEditor:
-    def __init__(self, component_manager):
+    def __init__(self, component_manager) -> None:
         self.component_manager = component_manager
 
     def change_cell_state_from_position(self, position: tuple[int, int]):

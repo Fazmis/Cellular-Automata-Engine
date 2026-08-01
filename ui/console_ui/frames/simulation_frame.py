@@ -3,7 +3,7 @@ from .windows import HeaderWindow, GameWindow, HelpWindow
 
 
 class SimulationFrame:
-    def __init__(self, stdscr: curses._CursesWindow, cursor, simulation_name:str, grid_size:tuple[int, int]):
+    def __init__(self, stdscr: curses._CursesWindow, cursor, simulation_name: str, grid_size: tuple[int, int]):
         self.stdscr = stdscr
         self.cursor = cursor
         self.title = simulation_name
@@ -11,9 +11,9 @@ class SimulationFrame:
         header_lines_count = 3
         self.header_window = HeaderWindow(
             curses.newwin(header_lines_count,
-                   20 if len(self.title) < 18 else len(self.title) + 2,
-                   0,
-                   0),
+                          20 if len(self.title) < 18 else len(self.title) + 2,
+                          0,
+                          0),
             self.title,
         )
         self.game_window = GameWindow(
@@ -35,12 +35,13 @@ class SimulationFrame:
             ),
         )
 
-    def render(self, render_data:dict):
-        self.header_window.render(render_data.get("title"))
+    def render(self, render_data: dict):
+        display_config = render_data.get("display_config")
+
+        self.header_window.render(display_config)
 
         grid = render_data.get("grid")
-        config = render_data.get("grid_config")
-        self.game_window.render(grid, config)
+        self.game_window.render(grid, display_config)
 
         generation_step = render_data.get("generation_step")
         state = render_data.get("state")
