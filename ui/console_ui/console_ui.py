@@ -26,7 +26,6 @@ class ConsoleUI:
         # не блокировать getch()
         self.stdscr.nodelay(True)
 
-        self.input_mapper = InputMapper(self.stdscr, self.cursor)
         self.simulation_frame = self.simulation_frame(
             self.stdscr,
             self.cursor,
@@ -34,6 +33,8 @@ class ConsoleUI:
             (20, 20),
         )
         self.current_frame = self.simulation_frame
+
+        self.input_mapper = InputMapper(self.stdscr, self.current_frame)
 
     def shutdown(self) -> None:
         if self.stdscr is None:

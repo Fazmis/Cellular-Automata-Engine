@@ -6,3 +6,4 @@ class Command(Enum):
     EDIT_CELL = auto()
     NEXT_STEP = auto()
     PREVIOUS_STEP = auto()
+    SELECT_SIMULATION = auto()
